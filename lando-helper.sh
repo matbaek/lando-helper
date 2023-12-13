@@ -45,11 +45,6 @@ mt () {
         return 1
     fi
 
-    if [ "$1" = "update" ] && [ "$MT_SETUP_UPDATE" != true ]; then
-        mt-helpers "$1"
-        return 1
-    fi
-
     for mt_command in "composer" "destroy" "gitkraken" "go" "heidisql" "info" "init" "install-ray-logger" "install-ray" "npm" "phpstorm" "rebuild" "size" "start" "stop" "update" "wp-password"; do
         if [ "$mt_command" = "$1" ]; then
             shift
