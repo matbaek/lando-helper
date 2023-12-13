@@ -1,0 +1,59 @@
+if [ -n "$found_lando_paths" ]; then
+    local lando_paths=($(echo $found_lando_paths | tr " " "\n"))
+else
+    local lando_paths=($(find "$MT_PROJECT_FOLDER" -maxdepth 3 -type f -name ".lando.yml" 2>/dev/null))
+fi
+
+if [ ${#lando_paths[@]} -eq 0 ]; then
+    echo "$MT_EMOJI No Lando projects found."
+    return 1
+fi
+
+local lando_names=()
+
+for lando_file in "${lando_paths[@]}"; do
+    local lando_name=$(echo "$lando_file" | rev | cut -d'/' -f 2 | rev)
+    lando_names+=("$lando_name")
+done
+
+local sorted_lando_names=($(printf '%s\n' "${lando_names[@]}" | sort))
+local num_rows=$(((2 + ${#sorted_lando_names[@]}) / 3))
+
+for ((i = 0; i < $num_rows; i++)) {
+    local column=""
+    for ((j = (i + 1); j < (${#sorted_lando_names[@]} + 1); j+=$num_rows)) {
+        column+=$(printf "%-25s" "${sorted_lando_names[$j]}")
+    }
+    
+    [ "$column" = "" ] || echo "$MT_EMOJI $column"
+}
+
+local -a compcontext
+local folder_name
+local compcontext=($sorted_lando_names)
+vared -p "${MT_EMOJI} Enter a folder: " -c folder_name
+
+local running=1
+local failed=1
+while [ "$running" -eq 1 ]; do
+    if [ "$folder_name" = "" ] && [ -n "$empty_value_valid" ]; then
+        local running=0
+        unset lando_result
+        break
+    fi
+
+    for ((i = 1; i < (${#lando_names[@]} + 1); i++)); do
+        if [ "${lando_names[$i]}" = "$folder_name" ]; then
+            local running=0
+            local lando_result=$(dirname "${lando_paths[$i]}")
+            break
+        fi
+    done
+
+    if [ "$running" -eq 1 ]; then
+        tput cuu1
+        tput el
+        vared -p "${MT_EMOJI} Invalid folder. Please enter a valid folder ($failed): " -c folder_name
+        ((failed++))
+    fi
+done
