@@ -62,20 +62,22 @@ mt () {
     case "$1" in
         "docker-down")
             # Insert logic to stop Docker
+            powershell.exe -Command "taskkill /IM \"Docker Desktop.exe\" /F"
             return 1
             ;;
         "docker-up")
             # Insert logic to open Docker here
+            powershell.exe -Command "Start-Process -FilePath \"C:/Program Files/Docker/Docker/Docker Desktop.exe\""
             return 1
             ;;
         "open-heidisql")
             # Insert logic to open HeidiSQL here
-            "" "$@" &
+            "/mnt/c/Program Files/HeidiSQL/heidisql.exe" "$@" &
             return 1
             ;;
         "open-phpstorm")
             # Insert logic to open PHPStorm here
-            "" "$@"
+            "/mnt/c/Users/MathiasBærentsen/AppData/Local/Programs/PhpStorm/bin/phpstorm64.exe" "$@"
             return 1
             ;;
         "watch")
