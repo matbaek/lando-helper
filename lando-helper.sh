@@ -45,7 +45,7 @@ mt () {
         return 1
     fi
 
-    for mt_command in "composer" "destroy" "gitkraken" "go" "heidisql" "info" "init" "install-ray-logger" "install-ray" "npm" "phpstorm" "rebuild" "size" "start" "stop" "update" "wp-password"; do
+    for mt_command in "composer" "destroy" "gitkraken" "go" "heidisql" "info" "init" "install-ray" "install-ray-logger" "npm" "phpstorm" "rebuild" "size" "start" "stop" "update" "wp-password"; do
         if [ "$mt_command" = "$1" ]; then
             shift
 
@@ -100,32 +100,23 @@ mt () {
 
 mt-helpers() {
     case "$1" in
-        "mt")
-            echo "$MT_EMOJI #### WIP ####"
-            echo "$MT_EMOJI Usage: mt <arg1>"
+        "composer")
+            ;;
+        "destroy")
+            echo "$MT_EMOJI Usage: destroy"
             echo "$MT_EMOJI "
             echo "$MT_EMOJI \e[1;32mOptions:\e[0m"
-            echo "$MT_EMOJI   --help                Show this help message or use it together with <arg1>"
+            echo "$MT_EMOJI   --help                Show this help message"
             echo "$MT_EMOJI "
-            echo "$MT_EMOJI \e[1;32mArguments:\e[0m"
-            echo "$MT_EMOJI   <arg1>                See under"
-            echo "$MT_EMOJI     go                  Go to folder for argument(s)"
-            echo "$MT_EMOJI     init                Create folder and Lando app"
-            echo "$MT_EMOJI     destroy             Destroys Lando app and remove folder and all files"
-            echo "$MT_EMOJI     start               Starts your Lando app"
-            echo "$MT_EMOJI     stop                Stops your Lando app"
-            echo "$MT_EMOJI     rebuild             Rebuilds your Lando app from scratch, preserving data"
-            echo "$MT_EMOJI     composer            Composer in Lando app"
-            echo "$MT_EMOJI     npm                 Node in Lando app"
-            echo "$MT_EMOJI     gitkraken           Open git repo in Gitkraken"
-            echo "$MT_EMOJI     wp                  WP Shell in Lando app"
-            echo "$MT_EMOJI     db-info             Get the database info, for your Lando app"
-            echo "$MT_EMOJI     size                Get the size of all your Lando apps"
-            echo "$MT_EMOJI     wp-password         Set password for a user"
-            echo "$MT_EMOJI     install-ray         Install Spatie Ray as MU plugin"
-            echo "$MT_EMOJI     install-ray-logger  Install Spatie Ray logger as MU plugin"
-            echo "$MT_EMOJI     wp-queue            Wrapper function for wp queue package"
+            echo "$MT_EMOJI \e[1;32mBehavior:\e[0m"
+            echo "$MT_EMOJI   Destroy the selected Lando app and remove the folder."
             echo ""
+            ;;
+        "docker")
+            ;;
+        "docker")
+            ;;
+        "gitkraken")
             ;;
         "go")
             echo "$MT_EMOJI Usage: go <arg1> [arg2 ... argN]"
@@ -142,37 +133,31 @@ mt-helpers() {
             echo "$MT_EMOJI   The function then searches for each subsequent argument as a directory inside the previous one with a max-depth of 2."
             echo ""
             ;;
+        "heidisql")
+            ;;
+        "info")
+            ;;
         "init")
             ;;
-        "update")
-            echo "$MT_EMOJI Usage: update"
+        "install")
+            ;;
+        "install")
+            ;;
+        "npm")
+            ;;
+        "phpstorm")
+            ;;
+        "rebuild")
+            echo "$MT_EMOJI Usage: rebuild"
             echo "$MT_EMOJI "
             echo "$MT_EMOJI \e[1;32mOptions:\e[0m"
             echo "$MT_EMOJI   --help                Show this help message"
             echo "$MT_EMOJI "
-            echo "$MT_EMOJI \e[1;32mArguments:\e[0m"
-            echo "$MT_EMOJI   [arg1]                Optional - Version tag for a specific version"
-            echo "$MT_EMOJI "
             echo "$MT_EMOJI \e[1;32mBehavior:\e[0m"
-            echo "$MT_EMOJI   To setup this function, you will need to:"
-            echo "$MT_EMOJI   Go to \e[96m$MT_PROJECT_FOLDER/commands/update.sh\e[0m"
-            echo "$MT_EMOJI   and insert the downloading of Lando logic here:"
-            echo "$MT_EMOJI   - '# Insert logic to download and install Lando'"
-            echo "$MT_EMOJI   Go to \e[96m$MT_PROJECT_FOLDER/mt.sh\e[0m"
-            echo "$MT_EMOJI   and insert docker start & stop logic here:"
-            echo "$MT_EMOJI   - '# Insert logic to open Docker here'"
-            echo "$MT_EMOJI   - '# Insert logic to stop Docker'"
+            echo "$MT_EMOJI   Rebuild the selected Lando app."
             echo ""
             ;;
-        "destroy")
-            echo "$MT_EMOJI Usage: destroy"
-            echo "$MT_EMOJI "
-            echo "$MT_EMOJI \e[1;32mOptions:\e[0m"
-            echo "$MT_EMOJI   --help                Show this help message"
-            echo "$MT_EMOJI "
-            echo "$MT_EMOJI \e[1;32mBehavior:\e[0m"
-            echo "$MT_EMOJI   Destroy the selected Lando app and remove the folder."
-            echo ""
+        "size")
             ;;
         "start")
             echo "$MT_EMOJI Usage: start"
@@ -194,32 +179,44 @@ mt-helpers() {
             echo "$MT_EMOJI   Stop the selected Lando app."
             echo ""
             ;;
-        "rebuild")
-            echo "$MT_EMOJI Usage: rebuild"
+        "update")
+            echo "$MT_EMOJI Usage: update"
             echo "$MT_EMOJI "
             echo "$MT_EMOJI \e[1;32mOptions:\e[0m"
             echo "$MT_EMOJI   --help                Show this help message"
-            echo "$MT_EMOJI "
-            echo "$MT_EMOJI \e[1;32mBehavior:\e[0m"
-            echo "$MT_EMOJI   Rebuild the selected Lando app."
-            echo ""
-            ;;
-        "info")
-            ;;
-        "wp-queue")
-            echo "$MT_EMOJI Usage: wp-queue <arg1> <arg2> <arg3>"
-            echo "$MT_EMOJI "
-            echo "$MT_EMOJI \e[1;32mOptions:\e[0m"
-            echo "$MT_EMOJI   --help                Show this help message"
-            echo "$MT_EMOJI   --force               Whether to force the job to run. (Only used when <arg1>='run')"
-            echo "$MT_EMOJI   --go                  Whether to go to the lando folder"
             echo "$MT_EMOJI "
             echo "$MT_EMOJI \e[1;32mArguments:\e[0m"
-            echo "$MT_EMOJI   <arg1>                Queue type: 'start', 'run', 'list'"
-            echo "$MT_EMOJI   <arg2>                Queue name. (Optional if <arg1>='list')"
-            echo "$MT_EMOJI   <arg3>                Queue row id. (Only required for <arg1>='run')"
+            echo "$MT_EMOJI   [arg1]                Optional - Version tag for a specific version"
+            echo "$MT_EMOJI "
+            echo "$MT_EMOJI \e[1;32mBehavior:\e[0m"
+            echo "$MT_EMOJI   To setup this function, you will need to:"
+            echo "$MT_EMOJI   Go to \e[96m$MT_PROJECT_FOLDER/commands/update.sh\e[0m"
+            echo "$MT_EMOJI   and insert the downloading of Lando logic here:"
+            echo "$MT_EMOJI   - '# Insert logic to download and install Lando'"
+            echo "$MT_EMOJI   Go to \e[96m$MT_PROJECT_FOLDER/mt.sh\e[0m"
+            echo "$MT_EMOJI   and insert docker start & stop logic here:"
+            echo "$MT_EMOJI   - '# Insert logic to open Docker here'"
+            echo "$MT_EMOJI   - '# Insert logic to stop Docker'"
             echo ""
             ;;
+        "watch")
+            ;;
+        "wp")
+            ;;
+#        "wp-queue")
+#            echo "$MT_EMOJI Usage: wp-queue <arg1> <arg2> <arg3>"
+#            echo "$MT_EMOJI "
+#            echo "$MT_EMOJI \e[1;32mOptions:\e[0m"
+#            echo "$MT_EMOJI   --help                Show this help message"
+#            echo "$MT_EMOJI   --force               Whether to force the job to run. (Only used when <arg1>='run')"
+#            echo "$MT_EMOJI   --go                  Whether to go to the lando folder"
+#            echo "$MT_EMOJI "
+#            echo "$MT_EMOJI \e[1;32mArguments:\e[0m"
+#            echo "$MT_EMOJI   <arg1>                Queue type: 'start', 'run', 'list'"
+#            echo "$MT_EMOJI   <arg2>                Queue name. (Optional if <arg1>='list')"
+#            echo "$MT_EMOJI   <arg3>                Queue row id. (Only required for <arg1>='run')"
+#            echo ""
+#            ;;
         "wp-password")
             echo "$MT_EMOJI Usage: wp-password [arg1]"
             echo "$MT_EMOJI "
@@ -233,11 +230,41 @@ mt-helpers() {
             echo "$MT_EMOJI   Changes a password, for a selected Wordpress user, for the selected Lando app."
             echo ""
             ;;
-        "install-ray")
+        "yeet")
             ;;
-        "install-ray-logger")
-            ;;
-        "*")
+        *)
+            echo "$MT_EMOJI #### WIP ####"
+            echo "$MT_EMOJI Usage: mt <arg1>"
+            echo "$MT_EMOJI "
+            echo "$MT_EMOJI \e[1;32mOptions:\e[0m"
+            echo "$MT_EMOJI   --help                Show this help message or use it together with <arg1>"
+            echo "$MT_EMOJI "
+            echo "$MT_EMOJI \e[1;32mArguments:\e[0m"
+            echo "$MT_EMOJI   <arg1>                See under"
+            echo "$MT_EMOJI     composer            Composer in Lando app"
+            echo "$MT_EMOJI     destroy             Destroys Lando app and remove folder and all files"
+            echo "$MT_EMOJI     docker-down         Shutdown Docker"
+            echo "$MT_EMOJI     docker-up           Starts Docker"
+            echo "$MT_EMOJI     gitkraken           Open git repo in Gitkraken"
+            echo "$MT_EMOJI     go                  Go to folder for argument(s)"
+            echo "$MT_EMOJI     heidisql            Open Lando app database in HeidiSQL"
+            echo "$MT_EMOJI     info                Gives Lando app info for argument(s)"
+            echo "$MT_EMOJI     init                Setup folder and Lando app"
+            echo "$MT_EMOJI     install-ray         Install Spatie Ray as MU plugin"
+            echo "$MT_EMOJI     install-ray-logger  Install Spatie Ray logger as MU plugin"
+            echo "$MT_EMOJI     npm                 Node in Lando app"
+            echo "$MT_EMOJI     phpstorm            Open git repo in PHPStorm"
+            echo "$MT_EMOJI     rebuild             Rebuilds your Lando app from scratch, preserving data"
+            echo "$MT_EMOJI     size                Get the size of all your Lando apps"
+            echo "$MT_EMOJI     start               Starts your Lando app"
+            echo "$MT_EMOJI     stop                Stops your Lando app"
+            echo "$MT_EMOJI     update              Check for new Lando update or specified version, and update/downgrades if available"
+            echo "$MT_EMOJI     watch               Wrapper function for 'mt npm run watch'"
+            echo "$MT_EMOJI     wp                  WP CLI in Lando app"
+#            echo "$MT_EMOJI     wp-queue            Wrapper function for wp queue package"
+            echo "$MT_EMOJI     wp-password         Set password for a user"
+            echo "$MT_EMOJI     yeet                Shutdown WSL (Windows users)"
+            echo ""
             ;;
     esac
 }
